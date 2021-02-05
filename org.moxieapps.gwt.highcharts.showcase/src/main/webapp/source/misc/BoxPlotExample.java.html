@@ -1,0 +1,90 @@
+<html>
+<head>
+    <link rel='stylesheet' href='../../css/syntax-highlighter.css' type='text/css' />
+    <script src='../../js/sh-core.js'></script>
+    <script src='../../js/sh-java.js'></script>
+</head>
+<body>
+<textarea name='code' class='java:nogutter' rows='15' cols='120'>
+    import com.google.gwt.i18n.client.*;
+    import com.google.gwt.core.client.EntryPoint;
+    import com.google.gwt.user.client.ui.RootPanel;
+    import org.moxieapps.gwt.highcharts.client.*;
+    import org.moxieapps.gwt.highcharts.client.labels.*;
+    import org.moxieapps.gwt.highcharts.client.plotOptions.*;
+
+    public class BoxPlotExample implements EntryPoint {
+
+        public void onModuleLoad() {
+            RootPanel.get().add(createChart());
+        }
+
+        @Override
+        public Chart createChart() {
+
+            final Chart chart = new Chart()
+                .setType(Series.Type.BOXPLOT)
+                .setChartTitleText("Box Plot Example")
+                .setLegend(
+                    new Legend()
+                        .setEnabled(false)
+                )
+            ;
+
+            chart.getXAxis()
+                .setCategories("1", "2", "3", "4", "5")
+                .setAxisTitleText("Experiment No.")
+            ;
+
+            final YAxis yAxis = chart.getYAxis();
+
+            yAxis.setAxisTitleText("Observations")
+                .createPlotLine()
+                .setColor("red")
+                .setWidth(1)
+                .setLabel(
+                    new PlotLineLabel()
+                        .setText("Theeoretical Mean: 932")
+                        .setAlign(PlotLineLabel.Align.CENTER)
+                        .setStyle(
+                            new Style()
+                                .setColor("gray")
+                        )
+                )
+            ;
+
+            chart.addSeries(chart.createSeries()
+                .setName("Observations")
+                .setPoints(new Number[][]{
+                    {760, 801, 848, 895, 965},
+                    {733, 853, 939, 980, 1080},
+                    {714, 762, 817, 870, 918},
+                    {724, 802, 806, 871, 950},
+                    {834, 836, 864, 882, 910}
+                })
+            )
+                .addSeries(chart.createSeries()
+                    .setName("Outlier")
+                    .setType(Series.Type.SCATTER)
+                    .setPoints(new Point[]{
+                        new Point(0, 644),
+                        new Point(4, 718),
+                        new Point(4, 951),
+                        new Point(4, 969)
+                    })
+                )
+                .setToolTip(
+                    new ToolTip()
+                        .setPointFormat("Observation: {point.y}")
+                )
+            ;
+
+            return chart;
+        }
+    }
+</textarea>
+<script type='text/javascript'>
+    dp.SyntaxHighlighter.HighlightAll("code");
+</script>
+</body>
+</html>

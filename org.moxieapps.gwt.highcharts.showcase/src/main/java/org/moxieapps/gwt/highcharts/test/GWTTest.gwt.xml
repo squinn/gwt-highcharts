@@ -1,0 +1,25 @@
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.0//EN"
+        "http://google-web-toolkit.googlecode.com/svn/releases/2.0/distro-source/core/src/gwt-module.dtd">
+<module>
+
+    <inherits name='com.google.gwt.user.User'/>
+    <inherits name="org.moxieapps.gwt.highcharts.Highcharts"/>
+    <inherits name="com.smartgwt.SmartGwtNoTheme"/>
+
+    <entry-point class='org.moxieapps.gwt.highcharts.test.client.GWTTest'/>
+
+    <!-- Enable support for Super Dev Mode -->
+    <!--
+    <add-linker name="xsiframe"/>
+    <set-configuration-property name="devModeRedirectEnabled" value="true"/>
+    <set-configuration-property name='xsiframe.failIfScriptTag' value='FALSE'/>
+    -->
+
+    <!-- We want these off for the production build, but they can be enabled during development for cleaner stack traces on the client side -->
+    <!--
+    <set-property name="compiler.stackMode" value="emulated" />
+    <set-configuration-property name="compiler.emulatedStack.recordLineNumbers" value="true"/>
+    <set-configuration-property name="compiler.emulatedStack.recordFileNames" value="true"/>
+    -->
+
+</module>

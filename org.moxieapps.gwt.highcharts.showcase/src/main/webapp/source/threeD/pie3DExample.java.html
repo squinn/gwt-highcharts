@@ -1,0 +1,89 @@
+<html>
+<head>
+    <link rel='stylesheet' href='../../css/syntax-highlighter.css' type='text/css' />
+    <script src='../../js/sh-core.js'></script>
+    <script src='../../js/sh-java.js'></script>
+</head>
+<body>
+<textarea name='code' class='java:nogutter' rows='15' cols='120'>
+    import com.google.gwt.i18n.client.*;
+    import com.google.gwt.core.client.EntryPoint;
+    import com.google.gwt.user.client.ui.RootPanel;
+    import org.moxieapps.gwt.highcharts.client.*;
+    import org.moxieapps.gwt.highcharts.client.labels.*;
+    import org.moxieapps.gwt.highcharts.client.plotOptions.*;
+
+    public class ChartExample implements EntryPoint {
+
+        public void onModuleLoad() {
+            RootPanel.get().add(createChart());
+        }
+
+        @Override
+        public Chart createChart() {
+            final Chart chart = new Chart()
+                .setType(Series.Type.PIE)
+                .setChartTitleText("What Pac-Man Eats")
+                .setPlotBackgroundColor((String) null)
+                .setPlotBorderWidth(null)
+                .setPlotShadow(false)
+                .setPiePlotOptions(new PiePlotOptions()
+                    .setAllowPointSelect(true)
+                    .setCursor(PlotOptions.Cursor.POINTER)
+                    .setPieDataLabels(new PieDataLabels()
+                        .setConnectorColor("#000000")
+                        .setEnabled(true)
+                        .setColor("#000000")
+                        .setFormatter(new DataLabelsFormatter() {
+                            public String format(DataLabelsData dataLabelsData) {
+                                return "<b>" + dataLabelsData.getPointName() + "</b>: " + dataLabelsData.getYAsDouble() + " %";
+                            }
+                        })
+                    )
+                    .setStartAngle(126)
+                    .setDepth(75)
+                )
+                .setLegend(new Legend()
+                    .setLayout(Legend.Layout.VERTICAL)
+                    .setAlign(Legend.Align.RIGHT)
+                    .setVerticalAlign(Legend.VerticalAlign.TOP)
+                    .setX(-100)
+                    .setY(100)
+                    .setFloating(true)
+                    .setBorderWidth(1)
+                    .setBackgroundColor("#FFFFFF")
+                    .setShadow(true)
+                )
+                .setToolTip(new ToolTip()
+                    .setFormatter(new ToolTipFormatter() {
+                        public String format(ToolTipData toolTipData) {
+                            return "<b>" + toolTipData.getPointName() + "</b>: " + toolTipData.getYAsDouble() + " %";
+                        }
+                    })
+                )
+                .setColors("#EBEE00", "#FF00FF", "#0000FF")
+                .setOptions3D(new Options3D()
+                    .setEnabled(true)
+                    .setAlpha(45)
+                    .setBeta(0)
+                    .setDepth(100)
+                );
+
+            chart.addSeries(chart.createSeries()
+                .setName("Browser share")
+                .setPoints(new Point[]{
+                    new Point("Dots", 80.0),
+                    new Point("Fruit", 10.0),
+                    new Point("Ghosts", 10.0)
+                })
+            );
+
+            return chart;
+        }
+    }
+</textarea>
+<script type='text/javascript'>
+    dp.SyntaxHighlighter.HighlightAll("code");
+</script>
+</body>
+</html>

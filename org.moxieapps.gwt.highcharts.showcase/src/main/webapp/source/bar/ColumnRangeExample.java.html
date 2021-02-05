@@ -1,0 +1,82 @@
+<html>
+<head>
+<link rel='stylesheet' href='../../css/syntax-highlighter.css' type='text/css' />
+<script src='../../js/sh-core.js'></script>
+<script src='../../js/sh-java.js'></script>
+</head>
+<body>
+<textarea name='code' class='java:nogutter' rows='15' cols='120'>
+import com.google.gwt.i18n.client.*;
+import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.user.client.ui.RootPanel;
+import org.moxieapps.gwt.highcharts.client.*;
+import org.moxieapps.gwt.highcharts.client.labels.*;
+import org.moxieapps.gwt.highcharts.client.plotOptions.*;
+
+public class ColumnRangeExample implements EntryPoint {
+
+    public void onModuleLoad() {
+        RootPanel.get().add(createChart());
+    }
+
+    public Chart createChart() {
+
+        final Chart chart = new Chart()
+            .setType(Series.Type.COLUMN_RANGE)
+            .setChartTitleText("Temperature variation by month")
+            .setChartSubtitleText("Observed in Vik i Sogn, Norway, 2009")
+            .setInverted(true)
+            .setLegend(new Legend()
+                .setEnabled(false)
+            )
+            .setToolTip(new ToolTip()
+                .setValueSuffix("°C")
+            )
+            .setColumnRangePlotOptions(new ColumnRangePlotOptions()
+                .setDataLabels(new DataLabels()
+                    .setEnabled(true)
+                    .setY(0)
+                    .setFormatter(new DataLabelsFormatter() {
+                        public String format(DataLabelsData dataLabelsData) {
+                            return NumberFormat.getFormat("0.0").format(dataLabelsData.getYAsDouble()) + " °C";
+                        }
+                    })
+                )
+            );
+
+        chart.getXAxis()
+            .setCategories(
+                "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+            );
+
+        chart.getYAxis()
+            .setAxisTitleText("Temperature ( °C )");
+
+        chart.addSeries(chart.createSeries()
+            .setName("Temperatures")
+            .setPoints(new Number[][]{
+                {-9.7, 9.4},
+                {-8.7, 6.5},
+                {-3.5, 9.4},
+                {-1.4, 19.9},
+                {0.0, 22.6},
+                {2.9, 29.5},
+                {9.2, 30.7},
+                {7.3, 26.5},
+                {4.4, 18.0},
+                {-3.1, 11.4},
+                {-5.2, 10.4},
+                {-13.5, 9.8}
+            })
+        );
+
+        return chart;
+    }
+
+}
+</textarea>
+<script type='text/javascript'>
+dp.SyntaxHighlighter.HighlightAll("code");
+</script>
+</body>
+</html>

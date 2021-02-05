@@ -1,0 +1,95 @@
+<html>
+<head>
+<link rel='stylesheet' href='../../css/syntax-highlighter.css' type='text/css' />
+<script src='../../js/sh-core.js'></script>
+<script src='../../js/sh-java.js'></script>
+</head>
+<body>
+<textarea name='code' class='java:nogutter' rows='15' cols='120'>
+import com.google.gwt.i18n.client.*;
+import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.user.client.ui.RootPanel;
+import org.moxieapps.gwt.highcharts.client.*;
+import org.moxieapps.gwt.highcharts.client.labels.*;
+import org.moxieapps.gwt.highcharts.client.plotOptions.*;
+
+public class AreaWithMissingPointsExample implements EntryPoint {
+
+    public void onModuleLoad() {
+        RootPanel.get().add(createChart());
+    }
+
+    public Chart createChart() {
+
+        final Chart chart = new Chart()
+            .setType(Series.Type.AREA)
+            .setChartTitleText("Fruit consumption *")
+            .setChartSubtitle(new ChartSubtitle()
+                .setText("* Jane's banana consumption is unknown")
+                .setFloating(true)
+                .setAlign(ChartTitle.Align.RIGHT)
+                .setVerticalAlign(ChartTitle.VerticalAlign.BOTTOM)
+                .setY(15)
+            )
+            .setSpacingBottom(30)
+            .setLegend(new Legend()
+                .setLayout(Legend.Layout.VERTICAL)
+                .setAlign(Legend.Align.LEFT)
+                .setVerticalAlign(Legend.VerticalAlign.TOP)
+                .setX(150)
+                .setY(100)
+                .setFloating(true)
+                .setBorderWidth(1)
+                .setBackgroundColor("#FFFFFF")
+            )
+            .setToolTip(new ToolTip()
+                .setFormatter(
+                    new ToolTipFormatter() {
+                        public String format(ToolTipData toolTipData) {
+                            return "<b>" + toolTipData.getSeriesName() + "</b><br/>" +
+                                toolTipData.getXAsString() + ": " + toolTipData.getYAsLong();
+                        }
+                    }
+                )
+            )
+            .setCredits(new Credits()
+                .setEnabled(false)
+            )
+            .setAreaPlotOptions(new AreaPlotOptions()
+                .setFillOpacity(0.5)
+            );
+
+        chart.getXAxis()
+            .setCategories(
+                "Apples", "Pears", "Oranges", "Bananas", "Grapes", "Plums", "Strawberries", "Raspberries"
+            );
+
+        chart.getYAxis()
+            .setAxisTitleText("Y-Axis")
+            .setLabels(new YAxisLabels()
+                .setFormatter(new AxisLabelsFormatter() {
+                    public String format(AxisLabelsData axisLabelsData) {
+                        return String.valueOf(axisLabelsData.getValueAsLong());
+                    }
+                })
+            );
+
+        chart.addSeries(chart.createSeries()
+            .setName("John")
+            .setPoints(new Number[] {0, 1, 4, 4, 5, 2, 3, 7})
+        );
+        chart.addSeries(chart.createSeries()
+            .setName("Jane")
+            .setPoints(new Number[] {1, 0, 3, null, 3, 1, 2, 1})
+        );
+
+        return chart;
+    }
+
+}
+</textarea>
+<script type='text/javascript'>
+dp.SyntaxHighlighter.HighlightAll("code");
+</script>
+</body>
+</html>

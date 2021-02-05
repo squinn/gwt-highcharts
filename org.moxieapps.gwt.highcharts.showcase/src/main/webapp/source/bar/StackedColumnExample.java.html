@@ -1,0 +1,91 @@
+<html>
+<head>
+<link rel='stylesheet' href='../../css/syntax-highlighter.css' type='text/css' />
+<script src='../../js/sh-core.js'></script>
+<script src='../../js/sh-java.js'></script>
+</head>
+<body>
+<textarea name='code' class='java:nogutter' rows='15' cols='120'>
+import com.google.gwt.i18n.client.*;
+import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.user.client.ui.RootPanel;
+import org.moxieapps.gwt.highcharts.client.*;
+import org.moxieapps.gwt.highcharts.client.labels.*;
+import org.moxieapps.gwt.highcharts.client.plotOptions.*;
+
+public class StackedColumnExample implements EntryPoint {
+
+    public void onModuleLoad() {
+        RootPanel.get().add(createChart());
+    }
+
+    public Chart createChart() {
+
+        final Chart chart = new Chart()
+            .setType(Series.Type.COLUMN)
+            .setChartTitleText("Stacked column chart")
+            .setColumnPlotOptions(new ColumnPlotOptions()
+                .setStacking(PlotOptions.Stacking.NORMAL)
+                .setDataLabels(new DataLabels()
+                    .setEnabled(true)
+                    .setColor("#FFFFFF")
+                )
+            )
+            .setLegend(new Legend()
+                .setAlign(Legend.Align.RIGHT)
+                .setVerticalAlign(Legend.VerticalAlign.TOP)
+                .setX(-100)
+                .setY(20)
+                .setFloating(true)
+                .setBackgroundColor("#FFFFFF")
+                .setBorderColor("#CCC")
+                .setBorderWidth(1)
+                .setShadow(false)
+            )
+            .setToolTip(new ToolTip()
+                .setFormatter(new ToolTipFormatter() {
+                    public String format(ToolTipData toolTipData) {
+                        return "<b>" + toolTipData.getXAsString() + "</b><br/>" +
+                            toolTipData.getSeriesName() + ": " + toolTipData.getYAsLong() + "<br/>" +
+                            "Total: " + toolTipData.getTotal();
+                    }
+                })
+            );
+
+        chart.getXAxis()
+            .setCategories("Apples", "Oranges", "Pears", "Grapes", "Bananas");
+
+        chart.getYAxis()
+            .setMin(0)
+            .setAxisTitleText("Total fruit consumption")
+            .setStackLabels(new StackLabels()
+                .setEnabled(true)
+                .setStyle(new Style()
+                    .setFontWeight("bold")
+                    .setColor("gray")
+                )
+            );
+
+        chart.addSeries(chart.createSeries()
+            .setName("John")
+            .setPoints(new Number[] {5, 3, 4, 7, 2})
+        );
+        chart.addSeries(chart.createSeries()
+            .setName("Jane")
+            .setPoints(new Number[] {2, 2, 3, 2, 1})
+        );
+        chart.addSeries(chart.createSeries()
+            .setName("Joe")
+            .setPoints(new Number[] {3, 4, 4, 2, 5})
+        );
+
+        return chart;
+    }
+
+}
+</textarea>
+<script type='text/javascript'>
+dp.SyntaxHighlighter.HighlightAll("code");
+</script>
+</body>
+</html>

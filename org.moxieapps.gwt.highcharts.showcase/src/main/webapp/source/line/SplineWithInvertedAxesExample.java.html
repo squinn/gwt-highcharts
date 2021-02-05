@@ -1,0 +1,92 @@
+<html>
+<head>
+<link rel='stylesheet' href='../../css/syntax-highlighter.css' type='text/css' />
+<script src='../../js/sh-core.js'></script>
+<script src='../../js/sh-java.js'></script>
+</head>
+<body>
+<textarea name='code' class='java:nogutter' rows='15' cols='120'>
+import com.google.gwt.i18n.client.*;
+import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.user.client.ui.RootPanel;
+import org.moxieapps.gwt.highcharts.client.*;
+import org.moxieapps.gwt.highcharts.client.labels.*;
+import org.moxieapps.gwt.highcharts.client.plotOptions.*;
+
+public class SplineWithInvertedAxesExample implements EntryPoint {
+
+    public void onModuleLoad() {
+        RootPanel.get().add(createChart());
+    }
+
+    public Chart createChart() {
+
+        final Chart chart = new Chart()
+            .setType(Series.Type.SPLINE)
+            .setInverted(true)
+            .setChartTitleText("Atmosphere Temperature by Altitude")
+            .setChartSubtitleText("According to the Standard Atmosphere Model")
+            .setStyle(new Style()
+                .setMargin("0 auto")
+            )
+            .setLegend(new Legend()
+                .setEnabled(false)
+            )
+            .setSplinePlotOptions(new SplinePlotOptions()
+                .setMarker(new Marker()
+                    .setEnabled(true)
+                )
+            )
+            .setToolTip(new ToolTip()
+                .setFormatter(new ToolTipFormatter() {
+                    public String format(ToolTipData toolTipData) {
+                        return toolTipData.getXAsLong() + " km: " + toolTipData.getYAsDouble() + "°C";
+                    }
+                })
+            );
+
+        chart.getXAxis()
+            .setReversed(false)
+            .setAxisTitleText("Altitude")
+            .setMaxPadding(0.05)
+            .setShowLastLabel(true)
+            .setLabels(new XAxisLabels()
+                .setFormatter(
+                    new AxisLabelsFormatter() {
+                        public String format(AxisLabelsData axisLabelsData) {
+                            return axisLabelsData.getValueAsLong() + "km";
+                        }
+                    }
+                )
+            );
+
+        chart.getYAxis()
+            .setAxisTitleText("Temperature")
+            .setLineWidth(2)
+            .setLabels(new YAxisLabels()
+                .setFormatter(
+                    new AxisLabelsFormatter() {
+                        public String format(AxisLabelsData axisLabelsData) {
+                            return axisLabelsData.getValueAsLong() + "°";
+                        }
+                    }
+                )
+            );
+
+        chart.addSeries(chart.createSeries()
+            .setName("Temperature")
+            .setPoints(new Number[][]{
+                {0, 15}, {10, -50}, {20, -56.5}, {30, -46.5}, {40, -22.1},
+                {50, -2.5}, {60, -27.7}, {70, -55.7}, {80, -76.5}
+            })
+        );
+
+        return chart;
+    }
+}
+</textarea>
+<script type='text/javascript'>
+dp.SyntaxHighlighter.HighlightAll("code");
+</script>
+</body>
+</html>

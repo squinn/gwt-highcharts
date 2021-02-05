@@ -1,0 +1,90 @@
+<html>
+<head>
+<link rel='stylesheet' href='../../css/syntax-highlighter.css' type='text/css' />
+<script src='../../js/sh-core.js'></script>
+<script src='../../js/sh-java.js'></script>
+</head>
+<body>
+<textarea name='code' class='java:nogutter' rows='15' cols='120'>
+import com.google.gwt.i18n.client.*;
+import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.user.client.ui.RootPanel;
+import org.moxieapps.gwt.highcharts.client.*;
+import org.moxieapps.gwt.highcharts.client.labels.*;
+import org.moxieapps.gwt.highcharts.client.plotOptions.*;
+
+public class DonutExample implements EntryPoint {
+
+    public void onModuleLoad() {
+        RootPanel.get().add(createChart());
+    }
+
+    public Chart createChart() {
+
+        final Chart chart = new Chart()
+            .setType(Series.Type.PIE)
+            .setMargin(50, 0, 0, 0)
+            .setChartTitleText("Browser market shares at a specific website")
+            .setChartSubtitleText("Inner circle: 2008, outer circle: 2010")
+            .setPlotBackgroundColor("none")
+            .setPlotBorderWidth(0)
+            .setPlotShadow(false)
+            .setToolTip(new ToolTip()
+                .setFormatter(new ToolTipFormatter() {
+                    public String format(ToolTipData toolTipData) {
+                        return "<b>" + toolTipData.getSeriesName() + "</b><br/>" +
+                            toolTipData.getPointName() + ": " + toolTipData.getYAsDouble() + " %";
+                    }
+                })
+            );
+
+        chart.addSeries(chart.createSeries()
+            .setName("2008")
+            .setPlotOptions(new PiePlotOptions()
+                .setCenter(.5, .5)
+                .setSize(.45)
+                .setInnerSize(.20)
+                .setDataLabels(new DataLabels()
+                    .setEnabled(false)
+                )
+            )
+            .setPoints(new Point[]{
+                new Point("Firefox", 44.2).setColor("#4572A7"),
+                new Point("IE", 46.6).setColor("#AA4643"),
+                new Point("Chrome", 3.1).setColor("#89A54E"),
+                new Point("Safari", 2.7).setColor("#80699B"),
+                new Point("Opera", 2.3).setColor("#3D96AE"),
+                new Point("Others", 0.4).setColor("#DB843D")
+            })
+        );
+
+        chart.addSeries(chart.createSeries()
+            .setName("2010")
+            .setPlotOptions(new PiePlotOptions()
+                .setCenter(.5, .5)
+                .setInnerSize(.45)
+                .setPieDataLabels(new PieDataLabels()
+                    .setEnabled(true)
+                    .setColor("#000000")
+                    .setConnectorColor("#000000")
+                )
+            )
+            .setPoints(new Point[]{
+                new Point("Firefox", 45.0).setColor("#4572A7"),
+                new Point("IE", 26.8).setColor("#AA4643"),
+                new Point("Chrome", 12.8).setColor("#89A54E"),
+                new Point("Safari", 8.5).setColor("#80699B"),
+                new Point("Opera", 6.2).setColor("#3D96AE"),
+                new Point("Others", 0.2).setColor("#DB843D")
+            })
+        );
+
+        return chart;
+    }
+}
+</textarea>
+<script type='text/javascript'>
+dp.SyntaxHighlighter.HighlightAll("code");
+</script>
+</body>
+</html>

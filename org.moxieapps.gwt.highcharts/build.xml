@@ -1,0 +1,53 @@
+<project name="GWT Highcharts" default="deploy" basedir=".">
+
+    <property name="target.src" location="target/site/apidocs"/>
+    <property name="target.dest" location="../../MoxieGroup/com.moxiegroup.webapp.root/src/main/webapp/moxieapps/gwt-highcharts"/>
+    <property name="api.dest" location="../../MoxieGroup/com.moxiegroup.webapp.root/src/main/resources/org/moxieapps/gwt/highcharts"/>
+    <property name="sourceforge.target.dest" location="../../SourceForge/gwt-highcharts-code"/>
+    <property name="resources.dest" location="../../MoxieResources/java/gwt-highcharts-1.7.0"/>
+    <property name="build.jar" location="target/org.moxieapps.gwt.highcharts-1.7.0.jar" />
+    <property name="source.jar" location="target/org.moxieapps.gwt.highcharts-1.7.0-sources.jar" />
+    <property name="evaluate.dest" location="C:/temp/MoxieGroup/highcharts/core"/>
+
+    <target name="deploy">
+        <!--<exec executable="mvn.bat" dir=".">-->
+            <!--<arg value="javadoc:javadoc"/>-->
+        <!--</exec>-->
+        <!--<copy todir="${sourceforge.target.dest}">-->
+            <!--<fileset dir=".">-->
+                <!--<exclude name="org.moxieapps.gwt.highcharts.iml"/>-->
+                <!--<exclude name="build.xml"/>-->
+                <!--<exclude name="**/target/**"/>-->
+            <!--</fileset>-->
+        <!--</copy>-->
+
+        <!-- Handle the javadoc -->
+        <delete dir="${target.src}"/>
+        <exec executable="mvn.bat" dir=".">
+            <arg value="javadoc:javadoc"/>
+        </exec>
+        <checksum>
+            <fileset dir="${target.src}"/>
+        </checksum>
+        <zip basedir="${target.src}" destfile="${api.dest}/apidocs.zip"/>
+
+        <jar destfile="${source.jar}">
+            <fileset dir="src/main/java">
+                <include name="**/*.java"/>
+            </fileset>
+        </jar>
+        <copy todir="${target.dest}/downloads/" file="${build.jar}" />
+        <copy todir="${target.dest}/downloads/" file="${source.jar}" />
+        <copy todir="${resources.dest}/" file="${build.jar}" />
+    </target>
+
+    <target name="evaluate">
+        <delete dir="${evaluate.dest}"/>
+        <copy todir="${evaluate.dest}">
+            <fileset dir=".">
+                <exclude name="**/target/**"/>
+            </fileset>
+        </copy>
+    </target>
+
+</project>

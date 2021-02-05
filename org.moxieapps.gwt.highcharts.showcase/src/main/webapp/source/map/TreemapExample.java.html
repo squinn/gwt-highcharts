@@ -1,0 +1,90 @@
+<html>
+<head>
+    <link rel='stylesheet' href='../../css/syntax-highlighter.css' type='text/css'/>
+    <script src='../../js/sh-core.js'></script>
+    <script src='../../js/sh-java.js'></script>
+</head>
+<body>
+<textarea name='code' class='java:nogutter' rows='15' cols='120'>
+    import com.google.gwt.i18n.client.*;
+    import com.google.gwt.core.client.EntryPoint;
+    import com.google.gwt.user.client.ui.RootPanel;
+    import org.moxieapps.gwt.highcharts.client.*;
+    import org.moxieapps.gwt.highcharts.client.labels.*;
+    import org.moxieapps.gwt.highcharts.client.plotOptions.*;
+
+    public class ChartExample implements EntryPoint {
+
+        public void onModuleLoad() {
+            RootPanel.get().add(createChart());
+        }
+
+        @Override
+        public Chart createChart() {
+            final Chart chart = new Chart()
+                    .setChartTitleText("Fruit Consumption");
+
+            //Defining points to act as parents
+            final Point appleParent = new Point("Apples")
+                    .setColor("#EC2500");
+            final Point bananaParent = new Point("Bananas")
+                    .setColor("#ECE100");
+            final Point orangeParent = new Point("Oranges")
+                    .setColor("#EC9800");
+
+            chart.addSeries(chart.createSeries()
+                    .setType(Series.Type.TREEMAP)
+                    .setPlotOptions(new TreemapPlotOptions()
+                            .setAlternateStartingDirection(true)
+                            .setLayoutAlgorithm(TreemapPlotOptions.LayoutAlgorithm.STRIPES)
+                            .setLevels(new TreemapPlotOptions.Level()
+                                    .setLevel(1)
+                                    .setLayoutAlgorithm(TreemapPlotOptions.LayoutAlgorithm.SLICE_AND_DICE)
+                                    .setDataLabels(new DataLabels()
+                                            .setEnabled(true)
+                                            .setAlign(Labels.Align.LEFT)
+                                            .setVerticalAlign(Labels.VerticalAlign.TOP)
+                                            .setStyle(new Style()
+                                                    .setFontSize("15px")
+                                                    .setFontWeight("bold")
+                                            )
+                                    )
+                            )
+                    )
+                    .setPoints(new Point[]{
+                            appleParent,
+                            bananaParent,
+                            orangeParent,
+                            new Point("Anne", 5)
+                                    .setParent(appleParent),
+                            new Point("Rick", 3)
+                                    .setParent(appleParent),
+                            new Point("Peter", 4)
+                                    .setParent(appleParent),
+                            new Point("Anne", 4)
+                                    .setParent(bananaParent),
+                            new Point("Rick", 10)
+                                    .setParent(bananaParent),
+                            new Point("Peter", 1)
+                                    .setParent(bananaParent),
+                            new Point("Anne", 1)
+                                    .setParent(orangeParent),
+                            new Point("Rick", 3)
+                                    .setParent(orangeParent),
+                            new Point("Peter", 3)
+                                    .setParent(orangeParent),
+                            new Point("Susanne", 2)
+                                    .setParent("Kiwi")
+                                    .setColor("#9EDE00")
+                    })
+            );
+
+            return chart;
+        }
+    }
+</textarea>
+<script type='text/javascript'>
+    dp.SyntaxHighlighter.HighlightAll("code");
+</script>
+</body>
+</html>

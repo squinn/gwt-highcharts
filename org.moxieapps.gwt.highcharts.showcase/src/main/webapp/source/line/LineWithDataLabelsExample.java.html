@@ -1,0 +1,72 @@
+<html>
+<head>
+<link rel='stylesheet' href='../../css/syntax-highlighter.css' type='text/css' />
+<script src='../../js/sh-core.js'></script>
+<script src='../../js/sh-java.js'></script>
+</head>
+<body>
+<textarea name='code' class='java:nogutter' rows='15' cols='120'>
+import com.google.gwt.i18n.client.*;
+import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.user.client.ui.RootPanel;
+import org.moxieapps.gwt.highcharts.client.*;
+import org.moxieapps.gwt.highcharts.client.labels.*;
+import org.moxieapps.gwt.highcharts.client.plotOptions.*;
+public class LineWithDataLabelsExample implements EntryPoint {
+
+    public void onModuleLoad() {
+        RootPanel.get().add(createChart());
+    }
+
+    public Chart createChart() {
+
+        final Chart chart = new Chart()
+            .setType(Series.Type.LINE)
+            .setChartTitle(new ChartTitle()
+                .setText("Monthly Average Temperature")
+            )
+            .setChartSubtitle(new ChartSubtitle()
+                .setText("Source: WorldClimate.com")
+            )
+            .setToolTip(new ToolTip()
+                .setEnabled(false)
+            );
+
+        chart.getXAxis()
+            .setCategories(
+                "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+            );
+
+        chart.getYAxis()
+            .setAxisTitleText("Temperature °C");
+
+        chart.setLinePlotOptions(new LinePlotOptions()
+            .setEnableMouseTracking(true)
+            .setDataLabels(new DataLabels()
+                .setEnabled(true)
+            )
+        );
+
+        chart.addSeries(chart.createSeries()
+            .setName("Tokyo")
+            .setPoints(new Number[] {
+                7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6
+            })
+        );
+        chart.addSeries(chart.createSeries()
+            .setName("London")
+            .setPoints(new Number[] {
+                3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8
+            })
+        );
+
+        return chart;
+    }
+}
+</textarea>
+<script type='text/javascript'>
+dp.SyntaxHighlighter.HighlightAll("code");
+</script>
+</body>
+</html>

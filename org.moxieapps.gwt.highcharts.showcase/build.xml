@@ -1,0 +1,35 @@
+<project name="GWT Highcharts Showcase" default="deploy" basedir=".">
+
+    <property name="target.src" location="target/org.moxieapps.gwt.highcharts.showcase-1.0.0"/>
+    <property name="target.dest" location="../../MoxieGroup/com.moxiegroup.webapp.root/src/main/webapp/moxieapps/gwt-highcharts/showcase"/>
+    <property name="evaluate.dest" location="C:/temp/MoxieGroup/highcharts/showcase"/>
+
+    <target name="deploy">
+        <copy todir="${target.dest}">
+            <fileset dir="${target.src}">
+                <!-- Excluding the root file, as we have a separate version in the main project that includes the analytics tagging -->
+                <exclude name="index.jsp"/>
+                <exclude name="WEB-INF/**"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="evaluate">
+        <delete dir="${evaluate.dest}"/>
+        <copy todir="${evaluate.dest}">
+            <fileset dir=".">
+                <exclude name="**/target/**"/>
+                <exclude name="/src/main/webapp/js/**"/>
+                <exclude name="/src/main/webapp/css/syntax**"/>
+                <exclude name="**/*.jsp"/>
+            </fileset>
+        </copy>
+        <copy todir="${evaluate.dest}">
+            <fileset dir=".">
+                <include name="**/*.jsp"/>
+            </fileset>
+            <globmapper from="*.jsp" to="*.html"/>
+        </copy>
+    </target>
+
+</project>

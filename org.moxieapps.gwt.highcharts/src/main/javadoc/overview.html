@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+    <title>API Overview</title>
+</head>
+<body>
+This library provides a means to include <a href="http://www.highcharts.com/">Highcharts</a> visualizations
+within a GWT application. The logical starting point is the {@link org.moxieapps.gwt.highcharts.client.Chart} class,
+which provides the primary GWT widget that can be used to create a chart and add it to a GWT container.
+<p/>
+To use, first, add the jar file to your project, and include the library in the GWT xml
+configuration file for your module:
+<pre><code>
+    &lt;inherits name="org.moxieapps.gwt.highcharts.Highcharts"/&gt;
+</code></pre>
+Then, the basic usage of the API is as follows:
+<pre><code>
+  // Create the chart widget and configure it using chainable methods
+  Chart chart = new Chart()
+    .setType(Series.Type.SPLINE)
+    .setChartTitleText("Nice Chart")
+    .setMarginRight(10);
+
+  // Add data series to the chart
+  Series series = chart.createSeries()
+    .setPoints(new Number[] { 163, 203, 276, 408, 547, 729, 628 });
+  chart.addSeries(series);
+
+  // Add the chart to any GWT container as a normal widget
+  RootPanel.get().add(chart);
+</code></pre>
+<p/>
+Note that in order for this widget to function you must have included the Highcharts javascript
+library and any of its dependencies in the page that the widget will run inside of. E.g.:
+<pre><code>
+  &lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"&gt;&lt;/script&gt;
+  &lt;script type="text/javascript" src="js/highcharts.js"&gt;&lt;/script&gt;
+</code></pre><pre><code>
+  &lt;!-- Optionally, add a highcharts theme file --&gt;
+  &lt;script type="text/javascript" src="js/themes/gray.js"&gt;&lt;/script&gt;
+</code></pre><pre><code>
+  &lt;!-- Optionally, include the highcharts exporting module --&gt;
+  &lt;script type="text/javascript" src="js/modules/exporting.js"&gt;&lt;/script&gt;
+</code></pre>
+<b>Important note:</b> if you're using the {@link org.moxieapps.gwt.highcharts.client.StockChart} visualization, you'll want
+to include the "highstock.js" file in your page instead of the "highcharts.js" file.  The highstock.js file includes
+all of the capabilities of the core "highcharts.js" file, so including it in your page allows you to use
+both {@link org.moxieapps.gwt.highcharts.client.Chart} and {@link org.moxieapps.gwt.highcharts.client.StockChart}
+visualization simultaneously.
+<p/>
+Please see the <a href="http://www.moxiegroup.com/moxieapps/gwt-highcharts/">GWT Highcharts</a> project page
+for more details on how to use this library, and in particular the
+<a href="http://www.moxiegroup.com/moxieapps/gwt-highcharts/showcase/">showcase application</a> which provides
+a collection of code examples that show various usage patterns.
+</body>
+</html>

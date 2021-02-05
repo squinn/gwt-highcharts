@@ -1,0 +1,48 @@
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.0//EN"
+        "http://google-web-toolkit.googlecode.com/svn/releases/2.0/distro-source/core/src/gwt-module.dtd">
+<module>
+
+    <inherits name='com.google.gwt.user.User'/>
+    <inherits name="org.moxieapps.gwt.highcharts.Highcharts"/>
+
+    <!--
+    It's more straightforward to just inherit "com.smartgwt.SmartGwt".  However, that then
+    includes a bunch of JS files in the page that we're not actually using.  So, instead we're only
+    inheriting from 'com.smartgwt.SmartGwtNoScript', and including the specific dependent
+    JS files we'll need within the page...
+    -->
+    <!--
+    <inherits name="com.smartgwt.SmartGwt"/>
+    -->
+    <inherits name="com.smartgwt.SmartGwtNoScript"/>
+   	<script src="sc/modules/ISC_Core.js"/>
+    <script src="sc/modules/ISC_Foundation.js"/>
+    <script src="sc/modules/ISC_Containers.js"/>
+    <script src="sc/modules/ISC_Grids.js"/>
+    <script src="sc/modules/ISC_Forms.js"/>
+    <script src="sc/modules/ISC_DataBinding.js"/>
+    <!--
+    <script src="sc/modules/ISC_RichTextEditor.js"/>
+    <script src="sc/modules/ISC_Calendar.js"/>
+    -->
+    <inherits name="com.smartclient.theme.enterprise.Enterprise" />
+
+    <entry-point class='org.moxieapps.gwt.highcharts.showcase.client.Showcase'/>
+
+    <!-- Enable support for Super Dev Mode -->
+    <!--
+    <add-linker name="xsiframe"/>
+    <set-configuration-property name="devModeRedirectEnabled" value="true"/>
+    <set-configuration-property name='xsiframe.failIfScriptTag' value='FALSE'/>
+    -->
+
+    <!-- We want these off for the production build, but they can be enabled during development for cleaner stack traces on the client side -->
+    <!--
+    <set-property name="compiler.stackMode" value="emulated" />
+    <set-configuration-property name="compiler.emulatedStack.recordLineNumbers" value="true"/>
+    <set-configuration-property name="compiler.emulatedStack.recordFileNames" value="true"/>
+    -->
+
+
+
+</module>

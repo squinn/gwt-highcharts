@@ -1,0 +1,69 @@
+<html>
+<head>
+    <link rel='stylesheet' href='../../css/syntax-highlighter.css' type='text/css' />
+    <script src='../../js/sh-core.js'></script>
+    <script src='../../js/sh-java.js'></script>
+</head>
+<body>
+<textarea name='code' class='java:nogutter' rows='15' cols='120'>
+    import com.google.gwt.i18n.client.*;
+    import com.google.gwt.core.client.EntryPoint;
+    import com.google.gwt.user.client.ui.RootPanel;
+    import org.moxieapps.gwt.highcharts.client.*;
+    import org.moxieapps.gwt.highcharts.client.labels.*;
+    import org.moxieapps.gwt.highcharts.client.plotOptions.*;
+
+    public class OHLCChartExample implements EntryPoint {
+
+        public void onModuleLoad() {
+            RootPanel.get().add(createChart());
+        }
+
+        @Override
+        public BaseChart createChart() {
+
+            final StockChart chart = new StockChart();
+
+            chart.setType(Series.Type.OHLC)
+                .setChartTitleText("AAPL Stock Price")
+                .setZoomType(BaseChart.ZoomType.X_AND_Y);
+
+            // Asynchronously loading point data to keep file size down
+            chart.setLoadEventHandler(new ChartLoadEventHandler() {
+                @Override
+                public boolean onLoad(ChartLoadEvent chartLoadEvent) {
+                    loadAsyncData(series, "js/data/OHLCData.js");
+                    return true;
+                }
+            });
+
+            chart.setRangeSelector(
+                new RangeSelector()
+                    .setSelected(2)
+            )
+                .setScrollbar(
+                    new Scrollbar()
+                        .setBorderRadius(5)
+                )
+                .addSeries(
+                    chart.createSeries()
+                        .setType(Series.Type.OHLC)
+                        .setPoints(AAPLStockPrice)
+                )
+            ;
+
+            return chart;
+        }
+
+        static final DateTimeFormat dateTimeFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
+
+        private long t(int year, int month, int day) {
+            return dateTimeFormat.parse(year + "-" + (month + 1) + "-" + day).getTime();
+        }
+    }
+</textarea>
+<script type='text/javascript'>
+    dp.SyntaxHighlighter.HighlightAll("code");
+</script>
+</body>
+</html>

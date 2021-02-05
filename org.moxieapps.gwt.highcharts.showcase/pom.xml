@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress osmorcNonOsgiMavenDependency -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.moxieapps</groupId>
+    <artifactId>gwt-highcharts-showcase</artifactId>
+    <version>1.0.0</version>
+    <packaging>bundle</packaging>
+
+    <name>Moxie Apps GWT Highcharts Showcase</name>
+    <url>http://www.moxiegroup.com/</url>
+
+    <dependencies>
+
+        <!-- Core GWT Dependencies -->
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>2.5.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-servlet</artifactId>
+            <version>2.5.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-dev</artifactId>
+            <version>2.5.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-codeserver</artifactId>
+            <version>2.5.1</version>
+        </dependency>
+
+        <!-- SmartGWT Dependencies -->
+        <dependency>
+            <groupId>com.smartgwt</groupId>
+            <artifactId>smartgwt</artifactId>
+            <version>2.5-r20110811</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--suppress osmorcNonOsgiMavenDependency -->
+        <dependency>
+            <groupId>com.smartgwt</groupId>
+            <artifactId>smartgwt-skins</artifactId>
+            <version>2.5-r20110811</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- GWT Highcharts API -->
+        <dependency>
+            <groupId>org.moxieapps</groupId>
+            <artifactId>gwt-highcharts</artifactId>
+            <version>1.7.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <finalName>org.moxieapps.gwt.highcharts.showcase-1.0.0</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>2.3.4</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Description>${project.name}</Bundle-Description>
+                        <Bundle-Version>${project.version}</Bundle-Version>
+                        <Export-Package>org.moxieapps.gwt.highcharts.showcase.*</Export-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>gwt-maven-plugin</artifactId>
+                <version>2.6.0</version>
+                <configuration>
+                    <modules>
+                        <module>org.moxieapps.gwt.highcharts.showcase.Showcase</module>
+                        <module>org.moxieapps.gwt.highcharts.test.GWTTest</module>
+                        <module>org.moxieapps.gwt.highcharts.test.DragTest</module>
+                    </modules>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    
+</project>

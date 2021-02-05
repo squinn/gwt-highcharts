@@ -1,0 +1,94 @@
+<html>
+<head>
+    <link rel='stylesheet' href='../../css/syntax-highlighter.css' type='text/css' />
+    <script src='../../js/sh-core.js'></script>
+    <script src='../../js/sh-java.js'></script>
+</head>
+<body>
+<textarea name='code' class='java:nogutter' rows='15' cols='120'>
+    import com.google.gwt.i18n.client.*;
+    import com.google.gwt.core.client.EntryPoint;
+    import com.google.gwt.user.client.ui.RootPanel;
+    import org.moxieapps.gwt.highcharts.client.*;
+    import org.moxieapps.gwt.highcharts.client.labels.*;
+    import org.moxieapps.gwt.highcharts.client.plotOptions.*;
+
+    public class WaterfallChartExample implements EntryPoint {
+
+        public void onModuleLoad() {
+            RootPanel.get().add(createChart());
+        }
+
+        @Override
+        public Chart createChart() {
+
+            final String[] colors = new String[]{
+                "#8BBC21",
+                "#910000",
+                "#FFFFFF",
+                "#0D233A"
+            };
+
+            final Chart chart = new Chart()
+                .setType(Series.Type.WATERFALL)
+                .setChartTitle(
+                    new ChartTitle()
+                        .setText("GWT Highcharts Waterfall")
+                )
+                .setLegend(
+                    new Legend()
+                        .setEnabled(false)
+                )
+                .setToolTip(
+                    new ToolTip()
+                        .setPointFormat("<b>${point.y:,.2f}<t/b> USD")
+                )
+            ;
+
+            chart.getXAxis()
+                .setType(Axis.Type.CATEGORY)
+            ;
+
+            chart.getYAxis()
+                .setAxisTitleText("USD")
+            ;
+
+            chart.setWaterfallPlotOptions(
+                new WaterfallPlotOptions()
+                    .setDataLabels(
+                        new DataLabels()
+                            .setEnabled(true)
+                            .setColor(colors[2])
+                    )
+                .setUpColor(colors[0])
+                .setColor(colors[1])
+
+            );
+
+            chart.addSeries(
+                chart.createSeries()
+                    .setPoints(new Point[]{
+                        new Point("Start", 120000),
+                        new Point("Product Revenue", 569000),
+                        new Point("Service Revenue", 231000),
+                        new Point("Positive Balance")
+                            .setIsIntermediateSum(true)
+                            .setColor(colors[3]),
+                        new Point("Fixed Costs", -342000),
+                        new Point("Variable Costs", -233000),
+                        new Point("Balance", 345000)
+                            .setIsSum(true)
+                            .setColor(colors[3])
+                    })
+            );
+
+
+            return chart;
+        }
+    }
+</textarea>
+<script type='text/javascript'>
+    dp.SyntaxHighlighter.HighlightAll("code");
+</script>
+</body>
+</html>
